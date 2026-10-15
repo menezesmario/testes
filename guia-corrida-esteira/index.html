@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Esteira</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&display=swap">
+<link rel="stylesheet" href="app/estilo.css">
+<link rel="stylesheet" href="app/telas/hoje.css">
+<link rel="stylesheet" href="app/telas/treinar.css">
+<link rel="stylesheet" href="app/telas/painel.css">
+<link rel="stylesheet" href="app/telas/cola.css">
+<link rel="stylesheet" href="app/telas/perfil.css">
+
+<div class="app" id="app">
+  <header class="topo" id="topo">
+    <div class="topo-barra">
+      <span class="topo-marca" id="topo-marca" aria-hidden="true"></span>
+      <span class="topo-titulo" id="titulo-pequeno" aria-hidden="true">Hoje</span>
+      <span class="topo-acoes">
+        <button type="button" class="armazenamento" id="armazenamento" data-modo="carregando" aria-label="Onde os dados estão salvos">
+          <span class="armazenamento-icone" aria-hidden="true"></span>
+          <span class="armazenamento-texto">Carregando</span>
+        </button>
+      </span>
+    </div>
+  </header>
+  <div class="pagina">
+    <div class="titulo-grande" id="titulo-grande">
+      <p class="subtitulo" id="subtitulo"></p>
+      <h1 id="titulo">Hoje</h1>
+    </div>
+    <div id="aviso-exemplo"></div>
+    <main class="conteudo" id="conteudo" tabindex="-1"></main>
+  </div>
+</div>
+
+<nav class="abas" id="abas" aria-label="Seções">
+  <button type="button" class="aba" data-aba="hoje" id="aba-hoje"><span class="aba-icone"></span><span>Hoje</span></button>
+  <button type="button" class="aba" data-aba="painel" id="aba-painel"><span class="aba-icone"></span><span>Painel</span></button>
+  <button type="button" class="aba" data-aba="cola" id="aba-cola"><span class="aba-icone"></span><span>Cola</span></button>
+  <button type="button" class="aba" data-aba="perfil" id="aba-perfil"><span class="aba-icone"></span><span>Perfil</span></button>
+</nav>
+
+<div class="tela-cheia" id="tela-cheia" role="dialog" aria-modal="true" aria-label="Treino" hidden></div>
+
+<div class="camada" id="camada">
+  <div class="toasts" role="status" aria-live="polite"></div>
+</div>
+
+<script type="module" src="app/main.js"></script>
+</body></html>

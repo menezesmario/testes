@@ -1,0 +1,74 @@
+/* hoje.css · aba Hoje (prefixo .hoje-).
+ * Estilos compartilhados ficam em app/estilo.css; aqui só o que é desta tela. */
+
+.hoje { display: grid; gap: var(--e-4); }
+.hoje > .grupo { margin: 0; }
+
+/* Cartão do treino do dia */
+.hoje-destaque .cartao-corpo { gap: var(--e-4); }
+/* A rampa já tem ar por cima (o degrau mais alto raramente passa de 70%). */
+.hoje-destaque .cartao-topo { margin-bottom: 0; }
+.hoje-destaque .cartao-topo .botao { white-space: nowrap; flex: none; }
+.hoje-texto { display: grid; gap: var(--e-1); }
+.hoje-nome { font-size: 22px; line-height: 28px; font-weight: 700; }
+.hoje-meta { font-size: 16px; line-height: 21px; color: var(--texto-2); }
+.hoje-destaque .chip { justify-self: start; min-height: 44px; font-size: 15px; }
+
+/* Grade de métricas */
+.hoje-cartao { padding: var(--e-4); }
+.hoje-cartao .cartao-corpo { gap: var(--e-1); }
+.hoje-unidade { margin-top: -2px; }
+.hoje-delta { margin-top: var(--e-1); color: var(--texto-2); }
+.hoje-delta .num { font-size: 15px; font-weight: 700; }
+.hoje-delta.sobe .num { color: var(--ok); }
+.hoje-delta.desce .num { color: var(--alerta); }
+.hoje-cartao .t-caption { margin-top: 2px; }
+/* Altura igualada ao cartão do arco: o conteúdo fica no topo e a última
+ * linha (origem do valor, legenda do arco) desce para o rodapé. */
+.hoje-cartao { display: flex; flex-direction: column; }
+.hoje-cartao .cartao-corpo { flex: 1; display: flex; flex-direction: column; }
+.hoje-cartao .cartao-corpo > :last-child { margin-top: auto; padding-top: var(--e-2); }
+
+/* Arco de 270° */
+.hoje-arco { position: relative; width: 112px; height: 112px; margin: 0 auto; }
+.hoje-arco-svg { width: 100%; height: 100%; overflow: visible; }
+.hoje-arco-pista,
+.hoje-arco-valor {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.hoje-arco-pista { stroke: var(--superficie-2); }
+.hoje-arco-valor { stroke: var(--destaque); }
+.hoje-arco-valor.completo { stroke: var(--ok); }
+.hoje-arco-texto {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding-bottom: 6px;
+}
+.hoje-arco-texto .num { font-size: 34px; line-height: 36px; letter-spacing: -0.02em; }
+.hoje-legenda { text-align: center; margin-top: var(--e-1); }
+
+/* Lista da semana */
+.hoje-marca { font-weight: 600; color: var(--destaque-texto); white-space: nowrap; }
+.hoje-acessorio-vazio { display: block; width: 20px; height: 20px; }
+#hoje-semana .linha-acessorio { width: 20px; justify-content: center; }
+
+/* Sheet "Outro treino" */
+.hoje-sheet-corpo { gap: var(--e-4); padding-bottom: var(--e-2); }
+.hoje-sheet-cabeca { display: grid; gap: 2px; }
+.hoje-sheet-nome { font-size: 22px; line-height: 28px; font-weight: 700; }
+.hoje-campos { display: grid; gap: var(--e-3); }
+.hoje-campos .grade-2 { align-items: start; }
+.hoje-campos .stepper-valor { white-space: nowrap; }
+.hoje-previa {
+  display: grid;
+  gap: var(--e-3);
+  padding: var(--e-4);
+  border-radius: var(--r-2);
+  background: var(--bg);
+}
+.hoje-previa .hoje-meta { font-size: 15px; line-height: 20px; }

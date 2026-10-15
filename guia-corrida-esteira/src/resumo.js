@@ -12,6 +12,7 @@
 // }
 
 import { vo2Esteira, mets, kcalPorMinuto, zonasFC } from "./calculadora.js";
+import { modoDoTreino } from "./treinos.js";
 
 const media = (xs) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
 
@@ -23,6 +24,7 @@ function naFaixa(pct, alvo) {
 export function resumirSessao(sessao) {
   const { amostras, fases, vo2max, pesoKg } = sessao;
   const dt = amostras.passo;
+  const modo = modoDoTreino(sessao.treino);
   const metsAtivos = [];
   const pcts = [];
   const fcs = [];
@@ -36,7 +38,7 @@ export function resumirSessao(sessao) {
   amostras.v.forEach((v, k) => {
     if (!(v > 0)) return;
     const inc = amostras.i[k] ?? 0;
-    const vo2 = vo2Esteira({ velocidadeKmh: v, inclinacaoPct: inc });
+    const vo2 = vo2Esteira({ velocidadeKmh: v, inclinacaoPct: inc, modo });
     const m = mets(vo2);
     metsAtivos.push(m);
     distanciaKm += (v * dt) / 3600;
@@ -160,6 +162,14 @@ function celula(valor) {
   return /[",\n]/.test(texto) ? `"${texto.replace(/"/g, '""')}"` : texto;
 }
 
+// Data no fuso de quem treinou: o inicio é ISO em UTC, e um treino às 22h
+// no Brasil já cai no dia seguinte em UTC.
+function dataLocal(iso) {
+  const d = new Date(iso);
+  const dois = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${dois(d.getMonth() + 1)}-${dois(d.getDate())}`;
+}
+
 // CSV compatível com registros/modelo-registro.csv (com 4 colunas extras no fim).
 export function paraCSV(sessoes) {
   const linhas = sessoes.map((s) => {
@@ -168,7 +178,7 @@ export function paraCSV(sessoes) {
     const z = minutosPorZona(s);
     const rel = s.relogio ?? {};
     return [
-      s.inicio.slice(0, 10), s.treino, r.duracaoS / 60, c.velocidade, c.inclinacao,
+      dataLocal(s.inicio), s.treino, r.duracaoS / 60, c.velocidade, c.inclinacao,
       rel.fcMedia ?? r.fcMedia, rel.fcMax ?? r.fcMax, ...z,
       rel.kcal, rel.carga, rel.pai, rel.cadencia, s.rpe, s.notas,
       r.metsMedio, r.pctVO2Medio, r.minutosNaFaixa, s.t7?.vo2max,

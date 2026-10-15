@@ -1,15 +1,20 @@
 // Treinos T1–T7, plano de 8 semanas e a divisão de cada sessão em fases.
 // As faixas de intensidade são % do VO2máx (ver docs/04, 05 e 07).
 
+// `modo` escolhe a equação do ACSM. Cada treino já diz se você caminha ou
+// corre; deixar a velocidade decidir ("auto") faria o custo saltar em 6,5 km/h.
+// Só os tiros (T4) podem ser corridos ou caminhados.
 export const TREINOS = {
-  T1: { nome: "Caminhada inclinada", resumo: "Contínuo, base aeróbica com pouco impacto" },
-  T2: { nome: "Rodagem leve", resumo: "Corrida contínua a 1%" },
-  T3: { nome: "Pirâmide contínua", resumo: "Degraus de 3 min; só a inclinação muda" },
-  T4: { nome: "Tiros em subida", resumo: "Acima de 85% no tiro, recuperação caminhando" },
-  T5: { nome: "Limiar", resumo: "Blocos fortes a 1–2%" },
-  T6: { nome: "Power hiking", resumo: "Caminhada a 15–20% de inclinação" },
-  T7: { nome: "Teste de referência", resumo: "Ebbeling: 4 min a 0% e 4 min a 5%" },
+  T1: { nome: "Caminhada inclinada", resumo: "Contínuo, base aeróbica com pouco impacto", modo: "caminhada" },
+  T2: { nome: "Rodagem leve", resumo: "Corrida contínua a 1%", modo: "corrida" },
+  T3: { nome: "Pirâmide contínua", resumo: "Degraus de 3 min; só a inclinação muda", modo: "caminhada" },
+  T4: { nome: "Tiros em subida", resumo: "Acima de 85% no tiro, recuperação caminhando", modo: "auto" },
+  T5: { nome: "Limiar", resumo: "Blocos fortes a 1–2%", modo: "corrida" },
+  T6: { nome: "Power hiking", resumo: "Caminhada a 15–20% de inclinação", modo: "caminhada" },
+  T7: { nome: "Teste de referência", resumo: "Ebbeling: 4 min a 0% e 4 min a 5%", modo: "caminhada" },
 };
+
+export const modoDoTreino = (treino) => TREINOS[treino]?.modo ?? "auto";
 
 // Cada sessão: id (semana + letra), treino e parâmetros. `alvo` é um número
 // (centro da faixa, ±3 pontos) ou [de, ate]. `alternativa` é a opção do dia.

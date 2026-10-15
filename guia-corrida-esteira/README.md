@@ -14,12 +14,44 @@ Guia pessoal de corrida e caminhada inclinada, feito primeiro para a esteira.
 2. **Configure o GTR 4:** perfil, zonas, alerta de zona e treino Esteira, conforme [02 · Amazfit GTR 4](docs/02-amazfit-gtr.md).
 3. **Confira a inclinação da XT025:** veja se o painel mostra % ou níveis, com o celular ([03](docs/03-inclinacao-e-velocidade.md#antes-de-tudo-o-número-do-painel-é--ou-nível)).
 4. **Faça o teste T7 (Ebbeling):** 8 minutos de caminhada que estimam o seu VO2máx. Está na [biblioteca](docs/04-biblioteca-de-treinos.md#t7--teste-de-referência-ebbeling-a-cada-4-semanas).
-5. **Gere a sua cola** e salve no celular:
+5. **Use o [app](#app)** na academia, ou gere a sua cola no terminal:
    ```bash
    node src/cli.js cola --vel 5 --fc 128 --idade 38 --sexo m
    ```
    A tabela diz qual inclinação usar, em cada velocidade, para 50–70% do VO2máx (contínuo) e para 85% ou mais (intervalado).
 6. **Siga o [plano de 8 semanas](docs/05-plano-8-semanas.md)** e anote cada sessão em [registros/](registros/).
+
+## App
+
+O app **Esteira** guia o treino no celular, apoiado no console da esteira. Ele está publicado em <https://claude.ai/artifact/M6CBWDq1pR1T284cQZMH1R>; o link é privado e só abre com a sua conta.
+
+- **Hoje:** o treino do dia no plano de 8 semanas, com o perfil de degraus, a faixa e a inclinação sugerida. "Começar" abre a sessão ao vivo.
+- **Sessão ao vivo:** velocidade e inclinação com botões grandes, % do VO2máx e METs na hora contra a faixa, sugestão de inclinação (um toque aplica), FC digitada ou por Bluetooth, bipes na troca de fase e tela sempre acesa. O T7 é guiado e calcula o VO2máx no fim.
+- **Painel:** evolução do VO2máx, minutos na faixa por semana, eficiência (batimentos por MET) e o histórico de sessões.
+- **Cola:** inclinação por velocidade e % do VO2máx.
+- **Perfil:** seus dados, zonas de FC, exportação em CSV (mesmas colunas de `registros/modelo-registro.csv`) e backup em JSON.
+
+Enquanto o Perfil não é preenchido, o app mostra dados de exemplo, sempre marcados como exemplo. Comece pelo Perfil e faça o T7.
+
+### Onde ficam os dados
+
+- **No claude.ai:** na sua conta, visíveis só para você, inclusive se o link for compartilhado.
+- **Fora do claude.ai** (GitHub Pages ou servidor local): só no navegador daquele aparelho. Para levar os dados de um lugar ao outro, use "Exportar backup" e "Importar backup" no Perfil.
+
+### FC por Bluetooth (Android)
+
+O navegador bloqueia o Bluetooth dentro do claude.ai; lá, a FC é digitada. Para ler a FC ao vivo do GTR 4:
+
+1. No GitHub, abra o repositório › **Settings › Pages** e escolha **Deploy from a branch**, a branch deste trabalho e a pasta `/ (root)`.
+2. Abra no **Chrome do Android** o endereço `https://menezesmario.github.io/testes/guia-corrida-esteira/`.
+3. No GTR 4, abra **Heart Rate Push** (Zepp OS 3.5) antes de começar.
+4. Na sessão ao vivo, toque no ícone de Bluetooth da linha de FC e escolha o relógio.
+
+### Rodar localmente
+
+```bash
+python3 -m http.server 8000   # nesta pasta; depois abra http://localhost:8000
+```
 
 ## Conteúdo
 
@@ -35,7 +67,8 @@ Guia pessoal de corrida e caminhada inclinada, feito primeiro para a esteira.
 | [docs/08-aplicativo-integrado-zepp.md](docs/08-aplicativo-integrado-zepp.md) | Proposta de app: o que o Zepp permite, arquitetura e roteiro |
 | [referencias.md](referencias.md) | Resumo dos vídeos, onde batem e onde divergem do guia, bibliografia |
 | [registros/modelo-registro.csv](registros/modelo-registro.csv) | Planilha para anotar as sessões |
-| [src/](src/) | Calculadora (Node.js, sem dependências) |
+| [index.html](index.html) e [app/](app/) | O app (JavaScript puro, sem dependências) |
+| [src/](src/) | Lógica compartilhada pelo app e pelo terminal: calculadora, plano e fases dos treinos, resumo de sessão |
 
 ## Calculadora
 
@@ -53,7 +86,8 @@ npm test
 
 ## Próximos passos
 
+- [ ] Preencher o Perfil no app
 - [ ] Conferir se a inclinação da XT025 está em % ou em níveis
 - [ ] Ajustar zonas e alerta de zona no GTR 4
-- [ ] Fazer o primeiro T7, registrar o VO2máx estimado e gerar a cola
+- [ ] Fazer o primeiro T7 no app
 - [ ] Revisar o plano depois do reteste da semana 4

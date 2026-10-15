@@ -2,7 +2,7 @@
 
 A esteira da academia é uma **NewFitness Xtreme XT025**, que vai até **20%**. Inclinação é a ferramenta mais poderosa do guia: dá para chegar a um esforço de corrida **caminhando**, com bem menos impacto.
 
-O painel da XT025 **não mostra METs**. Por isso a calculadora faz esse papel: rode `node src/cli.js cola ...` depois de cada T7 e leve a tabela no celular ([07](07-prescricao-pelo-vo2max.md#passo-3--converter-em-inclinação-na-esteira)).
+O painel da XT025 **não mostra METs**. Por isso a calculadora faz esse papel: o [app](../README.md#app) mostra os METs ao vivo, e o comando `node src/cli.js cola ...` gera a tabela de bolso ([07](07-prescricao-pelo-vo2max.md#passo-3--converter-em-inclinação-na-esteira)).
 
 ## Antes de tudo: o número do painel é % ou nível?
 

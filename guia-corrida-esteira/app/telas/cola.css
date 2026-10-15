@@ -1,0 +1,144 @@
+/* cola.css · aba Cola e sheet da cola na sessão (prefixo .cola-).
+ * Estilos compartilhados ficam em app/estilo.css; aqui só o que é desta tela. */
+
+.cola { display: grid; gap: var(--e-3); --cor-int: var(--int-3); }
+.cola-barra {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e-2);
+  min-height: 44px;
+}
+.cola-barra[hidden] { display: none; }
+.cola-resumo { font-size: 16px; line-height: 21px; font-weight: 600; min-width: 0; }
+.cola-barra .botao { flex: none; white-space: nowrap; padding-right: 0; }
+
+/* Lista por velocidade */
+.cola-lista {
+  background: var(--superficie);
+  border-radius: var(--r-2);
+  overflow: hidden;
+}
+.cola-linha {
+  position: relative;
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr) 76px;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: 60px;
+  padding: var(--e-2) var(--e-4);
+}
+.cola-linha + .cola-linha::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--e-4);
+  right: 0;
+  height: 0.5px;
+  background: var(--linha);
+}
+.cola-linha--padrao { background: var(--destaque-suave); }
+.cola-linha--padrao + .cola-linha::before,
+.cola-linha--padrao::before { left: 0; }
+
+.cola-vel { display: grid; gap: 1px; min-width: 0; }
+.cola-vel-valor { display: flex; align-items: baseline; gap: 4px; }
+.cola-vel-valor .num { font-size: 22px; line-height: 26px; }
+.cola-vel-unidade { font-size: 13px; line-height: 18px; color: var(--texto-2); }
+.cola-vel-detalhe { font-size: 12px; line-height: 16px; color: var(--texto-2); white-space: nowrap; }
+.cola-linha--padrao .cola-vel-detalhe { color: var(--destaque-texto); font-weight: 600; }
+
+.cola-inc { text-align: right; white-space: nowrap; }
+.cola-inc .num { font-size: 28px; line-height: 32px; letter-spacing: -0.01em; }
+.cola-inc-texto {
+  display: block;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--texto-2);
+  white-space: normal;
+}
+.cola-linha--padrao .cola-inc .num { color: var(--destaque-texto); }
+
+/* Mini-trilho: posição da inclinação na escala de 0 a 20% */
+.cola-trilho {
+  position: relative;
+  height: 6px;
+  border-radius: var(--r-capsula);
+  background: var(--superficie-2);
+}
+.cola-linha--padrao .cola-trilho { background: color-mix(in srgb, var(--texto) 10%, transparent); }
+.cola-trilho-valor {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--pos);
+  border-radius: var(--r-capsula);
+  background: var(--cor-int);
+}
+.cola-trilho-marca {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: var(--pos);
+  width: 4px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--texto);
+}
+
+/* Tabela completa */
+.cola-tabela-caixa {
+  background: var(--superficie);
+  border-radius: var(--r-2);
+  overflow: hidden;
+}
+.cola-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+.cola-tabela th,
+.cola-tabela td {
+  height: 48px;
+  padding: 0 2px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  border-top: 0.5px solid var(--linha);
+}
+.cola-tabela thead th {
+  height: 44px;
+  border-top: 0;
+  font-size: 13px;
+  color: var(--texto-2);
+  font-weight: 600;
+}
+.cola-tabela thead th.sel { color: var(--destaque-texto); }
+.cola-tabela .cola-th-vel {
+  width: 60px;
+  padding-left: var(--e-3);
+  text-align: left;
+  font-family: var(--fonte-num);
+  font-stretch: 108%;
+  font-variant-numeric: tabular-nums;
+}
+.cola-tabela tbody .cola-th-vel { font-size: 17px; font-weight: 700; }
+.cola-tabela td .num { font-size: 16px; font-weight: 700; }
+.cola-tabela td.fora { color: var(--texto-2); }
+.cola-tabela td.fora .num { font-weight: 600; }
+.cola-tabela td.sel { background: color-mix(in srgb, var(--texto) 5%, transparent); }
+.cola-tabela tr.padrao { background: var(--destaque-suave); }
+.cola-tabela tr.padrao th,
+.cola-tabela tr.padrao td { color: var(--destaque-texto); }
+.cola-tabela tr.padrao td.fora { color: var(--texto-2); }
+
+.cola-notas { display: grid; gap: var(--e-2); padding: var(--e-3) var(--e-2) 0; }
+
+/* Dentro da sheet da sessão ao vivo */
+.cola--compacta { gap: var(--e-2); }
+.cola--compacta .cola-linha { min-height: 56px; }
+.cola--compacta .cola-notas { padding-top: var(--e-2); }
+
+/* O corpo da sheet corta o anel de foco que sai para fora do segmentado. */
+.cola .segmentado-opcao:focus-visible { outline-offset: -2.5px; }

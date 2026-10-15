@@ -66,6 +66,23 @@ describe("resumo de sessão", () => {
   });
 });
 
+describe("equação pelo tipo de treino", () => {
+  it("caminhada inclinada a 6,6 km/h continua usando a equação de caminhada", () => {
+    const s = sessaoExemplo();
+    s.amostras.v = Array(120).fill(6.6);
+    const caminhada = vo2Esteira({ velocidadeKmh: 6.6, inclinacaoPct: 10, modo: "caminhada" });
+    assert.ok(Math.abs(resumirSessao(s).metsMedio - caminhada / 3.5) < 1e-9);
+  });
+
+  it("rodagem (T2) a 6 km/h usa a equação de corrida", () => {
+    const s = sessaoExemplo({ treino: "T2" });
+    s.amostras.v = Array(120).fill(6);
+    s.amostras.i = Array(120).fill(1);
+    const corrida = vo2Esteira({ velocidadeKmh: 6, inclinacaoPct: 1, modo: "corrida" });
+    assert.ok(Math.abs(resumirSessao(s).metsMedio - corrida / 3.5) < 1e-9);
+  });
+});
+
 describe("séries do painel", () => {
   it("começa a semana na segunda-feira", () => {
     const d = inicioDaSemana("2026-10-15T12:00:00");

@@ -70,7 +70,7 @@ O Workout Extension seria o encaixe perfeito: ele aceita o treino Esteira e lê 
 
 | Fase | Entrega | O que exige de você |
 |---|---|---|
-| 1 · MVP | Web app: sessão ao vivo no celular (velocidade, inclinação, cronômetro, METs, % do VO2máx, cola dinâmica), registro e gráficos. FC digitada ou via Heart Rate Push (Android) | Só o celular |
+| 1 · MVP ✅ | [Entregue](../README.md#app). Web app: sessão ao vivo no celular (velocidade, inclinação, cronômetro, METs, % do VO2máx, cola dinâmica), registro e gráficos. FC digitada ou via Heart Rate Push (Android) | Só o celular |
 | 2 · Relógio | Mini app no GTR 4 com FC ao vivo, alvos, vibração, gravação e sincronização com o web app | Computador com Node.js, [Zeus CLI](https://github.com/zepp-health/zeppos-docs/blob/main/docs/guides/quick-start/environment.mdx) e conta gratuita de desenvolvedor Zepp |
 | 3 · Extras | Importar do Strava o treino nativo; ler velocidade e inclinação da esteira, se a XT025 tiver Bluetooth (FTMS); Workout Extension, se a Zepp liberar para o GTR 4 | — |
 

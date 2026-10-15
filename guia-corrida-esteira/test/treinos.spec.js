@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { PLANO, TREINOS, montarFases, duracaoTotal, normalizarAlvo, semanaDoPlano, proximaSessao } from "../src/treinos.js";
+import { PLANO, TREINOS, montarFases, duracaoTotal, normalizarAlvo, semanaDoPlano, proximaSessao, modoDoTreino } from "../src/treinos.js";
 
 describe("plano de 8 semanas", () => {
   it("tem 8 semanas, ids únicos e só treinos conhecidos", () => {
@@ -64,6 +64,14 @@ describe("fases de cada treino", () => {
 
   it("rejeita treino desconhecido", () => {
     assert.throws(() => montarFases({ treino: "T9" }), RangeError);
+  });
+});
+
+describe("caminhada ou corrida", () => {
+  it("cada treino diz qual equação usar", () => {
+    assert.deepEqual(["T1", "T2", "T3", "T4", "T5", "T6", "T7"].map(modoDoTreino),
+      ["caminhada", "corrida", "caminhada", "auto", "corrida", "caminhada", "caminhada"]);
+    assert.equal(modoDoTreino("T9"), "auto");
   });
 });
 

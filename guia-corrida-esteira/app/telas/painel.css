@@ -1,0 +1,210 @@
+/* painel.css · aba Painel, gráficos e detalhe da sessão (prefixo .painel-).
+ * Estilos compartilhados ficam em app/estilo.css; aqui só o que é desta tela.
+ * Os gráficos (app/graficos.js) usam as classes .painel-graf-*. */
+
+.painel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e-4); }
+.painel-conteudo { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e-4); min-width: 0; }
+
+/* Aviso de dados de exemplo */
+.painel-exemplo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-3);
+  padding: var(--e-3) var(--e-4);
+  border-radius: var(--r-2);
+  background: var(--destaque-suave);
+  font-size: 15px;
+  line-height: 20px;
+}
+.painel-exemplo .icone { color: var(--destaque-texto); margin-top: 1px; }
+.painel-exemplo strong { font-weight: 600; }
+.painel-exemplo p + p { margin-top: 2px; color: var(--texto-2); }
+
+/* Textos de apoio dos cartões */
+.painel-nota { font-size: 13px; line-height: 18px; color: var(--texto-2); }
+.painel-dica {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--texto-2);
+}
+.painel-cartao-vazio .vazio { padding: var(--e-4) 0 var(--e-2); }
+
+/* ---------- Gráficos ---------- */
+.painel-graf { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e-2); min-width: 0; }
+
+.painel-graf-leitura-linha {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 36px;
+}
+.painel-graf-leitura-valor { font-size: 34px; line-height: 1.05; }
+.painel-graf-leitura-unidade { font-size: 15px; line-height: 20px; color: var(--texto-2); font-weight: 500; white-space: nowrap; }
+.painel-graf-leitura-nota {
+  margin-left: auto;
+  padding-left: var(--e-2);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--texto-2);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.painel-graf-leitura-nota[data-tom="ok"] { color: var(--ok); }
+.painel-graf-leitura-rotulo > div {
+  min-height: 18px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--texto-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.painel-graf-svg {
+  display: block;
+  width: 100%;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: crosshair;
+  border-radius: var(--r-1);
+}
+.painel-graf-svg text {
+  font-family: var(--fonte-texto);
+  font-size: 11px;
+  fill: var(--texto-2);
+  font-variant-numeric: tabular-nums;
+}
+.painel-graf-svg .painel-graf-valor {
+  font-family: var(--fonte-num);
+  font-size: 13px;
+  font-weight: 700;
+  font-stretch: 108%;
+  fill: var(--texto);
+}
+.painel-graf-halo {
+  paint-order: stroke;
+  stroke: var(--superficie);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.painel-graf-grade { stroke: var(--linha); stroke-width: 1; shape-rendering: crispEdges; }
+.painel-graf-grade--base { stroke: color-mix(in srgb, var(--texto-2) 45%, var(--linha)); }
+
+.painel-graf-linha {
+  fill: none;
+  stroke: var(--destaque);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.painel-graf-linha--sessao { stroke: var(--texto); stroke-width: 1.75; }
+.painel-graf-degraus { fill: none; stroke: var(--texto-2); stroke-width: 1.5; stroke-linejoin: round; }
+.painel-graf-ponto { fill: var(--destaque); stroke: var(--superficie); stroke-width: 2; }
+.painel-graf-faixa { fill: var(--destaque); fill-opacity: .13; }
+.painel-graf-faixa-fase { fill-opacity: .22; }
+
+.painel-graf-barra { fill: var(--destaque); transition: fill-opacity 120ms; }
+/* 45% (espec) ficava abaixo de 3:1 contra a superfície clara. */
+.painel-graf-barra--antiga { fill-opacity: .62; }
+.painel-graf-barra--sel { fill-opacity: 1; }
+.painel-graf-meta {
+  stroke: var(--texto);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  opacity: .75;
+}
+
+.painel-graf-cruzeta { stroke: var(--texto-2); stroke-width: 1; shape-rendering: crispEdges; }
+.painel-graf-cruz-ponto { fill: var(--texto); stroke: var(--superficie); stroke-width: 2; }
+
+/* Legenda: a marca repete o desenho do gráfico. */
+.painel-graf-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--e-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--texto-2);
+}
+.painel-graf-legenda li { display: inline-flex; align-items: center; gap: 6px; }
+.painel-graf-chave { display: inline-block; flex: none; }
+.painel-graf-chave--barra { width: 10px; height: 10px; border-radius: 2px 2px 0 0; background: var(--destaque); }
+.painel-graf-chave--ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--destaque); }
+.painel-graf-chave--linha { width: 14px; height: 2px; border-radius: 1px; background: var(--destaque); }
+.painel-graf-chave--faixa { width: 14px; height: 8px; border-radius: 2px; background: var(--destaque); opacity: .25; }
+.painel-graf-chave--faixa-fase { width: 14px; height: 8px; border-radius: 2px; background: var(--int-3); opacity: .35; }
+.painel-graf-chave--meta {
+  width: 14px;
+  height: 0;
+  border-top: 1.5px dashed var(--texto);
+  opacity: .75;
+}
+.painel-graf-chave--linha-sessao { width: 14px; height: 2px; border-radius: 1px; background: var(--texto); }
+.painel-graf-chave--linha-incl { width: 14px; height: 2px; border-radius: 1px; background: var(--texto-2); }
+
+/* ---------- Lista de sessões ---------- */
+.painel-lista .linha-rotulo { font-size: 15px; line-height: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.painel-lista .linha-detalhe { overflow-wrap: anywhere; }
+.painel-lista .linha-item.com-icone + .linha-item::before { left: 108px; }
+.painel-lista .linha-valor { color: var(--texto); }
+.painel-sessao-valor {
+  display: grid;
+  justify-items: end;
+  min-width: 48px;
+  font-family: var(--fonte-texto);
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--texto-2);
+}
+.painel-sessao-valor .num { font-size: 22px; line-height: 1.1; color: var(--texto); }
+
+/* ---------- Detalhe da sessão (tela empilhada) ---------- */
+.painel-detalhe { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.painel-detalhe-topo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  min-height: 52px;
+  margin: 0 auto;
+}
+.painel-detalhe-topo .botao { margin-left: -8px; }
+.painel-detalhe-rolagem {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.painel-detalhe-corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-4);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 0 calc(var(--e-8) + env(safe-area-inset-bottom, 0px));
+}
+.painel-detalhe-titulo { font-size: 28px; line-height: 34px; font-weight: 700; }
+.painel-detalhe-sub { margin-top: 2px; font-size: 13px; line-height: 18px; color: var(--texto-2); }
+.painel-detalhe-rampa { margin: 0; display: grid; gap: 6px; }
+.painel-detalhe-rampa figcaption { font-size: 12px; line-height: 16px; color: var(--texto-2); }
+.painel-metricas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-4) var(--e-3);
+}
+.painel-detalhe .grupo { margin-bottom: 0; }
