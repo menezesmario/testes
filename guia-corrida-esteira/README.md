@@ -32,6 +32,7 @@ Guia pessoal de corrida e caminhada inclinada, feito primeiro para a esteira.
 | [docs/05-plano-8-semanas.md](docs/05-plano-8-semanas.md) | Base (semanas 1–4) e construção (semanas 5–8) |
 | [docs/06-seguranca.md](docs/06-seguranca.md) | Cuidados com inclinação alta, sinais de alerta |
 | [docs/07-prescricao-pelo-vo2max.md](docs/07-prescricao-pelo-vo2max.md) | O método dos vídeos, passo a passo, e a ligação com a FC |
+| [docs/08-aplicativo-integrado-zepp.md](docs/08-aplicativo-integrado-zepp.md) | Proposta de app: o que o Zepp permite, arquitetura e roteiro |
 | [referencias.md](referencias.md) | Resumo dos vídeos, onde batem e onde divergem do guia, bibliografia |
 | [registros/modelo-registro.csv](registros/modelo-registro.csv) | Planilha para anotar as sessões |
 | [src/](src/) | Calculadora (Node.js, sem dependências) |
