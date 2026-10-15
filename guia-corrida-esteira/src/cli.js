@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const calc = require("./calculadora");
+import * as calc from "./calculadora.js";
 
 const AJUDA = `Uso:
   node src/cli.js zonas      --idade 38 [--repouso 58] [--fcmax 186]

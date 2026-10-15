@@ -4,11 +4,12 @@
   "private": true,
   "description": "Guia de treino de corrida e caminhada inclinada em esteira, com dados do Amazfit GTR",
   "license": "MIT",
+  "type": "module",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test test/calculadora.spec.js",
+    "test": "node --test",
     "zonas": "node src/cli.js zonas",
     "esforco": "node src/cli.js esforco",
     "tabela": "node src/cli.js tabela"

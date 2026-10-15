@@ -1,6 +1,6 @@
-const { describe, it } = require("node:test");
-const assert = require("node:assert/strict");
-const calc = require("../src/calculadora");
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import * as calc from "../src/calculadora.js";
 
 const perto = (atual, esperado, tol = 0.05) =>
   assert.ok(Math.abs(atual - esperado) <= tol, `${atual} != ${esperado}`);
