@@ -42,8 +42,8 @@ Enquanto o Perfil não é preenchido, o app mostra dados de exemplo, sempre marc
 
 O navegador bloqueia o Bluetooth dentro do claude.ai; lá, a FC é digitada. Para ler a FC ao vivo do GTR 4:
 
-1. No GitHub, abra o repositório › **Settings › Pages** e escolha **Deploy from a branch**, a branch deste trabalho e a pasta `/ (root)`.
-2. Abra no **Chrome do Android** o endereço `https://menezesmario.github.io/testes/guia-corrida-esteira/`.
+1. Abra <https://github.com/menezesmario/testes/settings/pages>. Em **Source**, escolha **Deploy from a branch**; em **Branch**, escolha `claude/fervent-brahmagupta-13f9fj` e a pasta `/ (root)`; toque em **Save**.
+2. Espere 1 a 2 minutos, até a página de configuração mostrar "Your site is live". Depois abra no **Chrome do Android** o endereço `https://menezesmario.github.io/testes/` (ele leva direto ao app).
 3. No GTR 4, abra **Heart Rate Push** (Zepp OS 3.5) antes de começar.
 4. Na sessão ao vivo, toque no ícone de Bluetooth da linha de FC e escolha o relógio.
 
