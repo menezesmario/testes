@@ -42,6 +42,18 @@ Os dois são do canal **Viajando pela Fisiologia** (Prof. Dr. Fábio). Os resumo
 | Conta do vídeo 2 | "0,50 × 15 = 7 METs" | — | Pequeno deslize: são 7,5 METs |
 | % do VO2máx × % da reserva | Usa o VO2máx direto | — | O ACSM recomenda a reserva. A diferença só pesa com VO2máx baixo. O guia segue os vídeos |
 
+## Equipamentos
+
+**Amazfit GTR 4** (Zepp OS 3.x):
+
+- [Wareable · análise do GTR 4](https://www.wareable.com/reviews/amazfit-gtr-4-review): VO2máx, efeito e carga de treino; FC subestimada no início e na retomada de corridas.
+- [Expert Reviews · análise do GTR 4](https://www.expertreviews.co.uk/beauty-wellness/wearables/amazfit-gtr-4-review): alertas de zona de FC valem para o treino inteiro; intervalado no relógio com aquecimento, repetições e volta à calma.
+- [Amazfit · atualização Zepp OS 3.5 para o GTR 4](https://in.amazfit.com/blogs/product-update/august-2024-amazfit-gtr-4-gtr-4-limited-edition-update-to-zepp-os-3-5): Heart Rate Push (transmitir FC para equipamentos como esteiras).
+- [Notebookcheck · Zepp OS 3.0 no GTR 4](https://www.notebookcheck.net/Amazfit-rolls-out-ZeppOS-3-0-to-GTR-4-smartwatch-in-new-update.794859.0.html): modelos de treino e suporte a cinta peitoral.
+- Manual oficial do GTR 4: caminho do alerta de zona (Treino › Configurações › Assistente › Alertas de treino › Zona de FC).
+
+**NewFitness Xtreme XT025:** esteira da linha cardio Xtreme, lançada na Fitness Brasil Expo 2025 ([ACAD Brasil](https://acadbrasil.com.br/pagina-informativo/newfitness-empresa-100-nacional-quer-democratizar-acesso-a-equipamentos-de-alta-performance/)). Não encontrei ficha técnica pública. A inclinação de 0–20% vem da observação na academia. O painel não mostra METs.
+
 ## Base científica das fórmulas
 
 - American College of Sports Medicine. *ACSM's Guidelines for Exercise Testing and Prescription*: equações metabólicas de caminhada e corrida na esteira e a relação entre % da reserva de FC e % da reserva de VO2.

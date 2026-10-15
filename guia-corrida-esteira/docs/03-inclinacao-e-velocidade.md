@@ -1,6 +1,25 @@
 # 03 · Inclinação e velocidade
 
-A esteira vai até **20%**. Inclinação é a ferramenta mais poderosa do guia: dá para chegar a um esforço de corrida **caminhando**, com bem menos impacto.
+A esteira da academia é uma **NewFitness Xtreme XT025**, que vai até **20%**. Inclinação é a ferramenta mais poderosa do guia: dá para chegar a um esforço de corrida **caminhando**, com bem menos impacto.
+
+O painel da XT025 **não mostra METs**. Por isso a calculadora faz esse papel: rode `node src/cli.js cola ...` depois de cada T7 e leve a tabela no celular ([07](07-prescricao-pelo-vo2max.md#passo-3--converter-em-inclinação-na-esteira)).
+
+## Antes de tudo: o número do painel é % ou nível?
+
+Todas as contas do guia supõem que o painel mostra **inclinação em %**. Algumas esteiras mostram **níveis** (1, 2, 3…) que não correspondem a %. Não encontrei a ficha técnica da XT025, então confira uma vez:
+
+1. Com a esteira parada a **0**, apoie o celular na lona, perto do painel, e abra o app de nível (no iPhone: app Medida › Nível; no Android, qualquer app de "nível" ou "inclinômetro"). Anote o ângulo: esse é o desnível do piso.
+2. Suba para **10** e meça de novo. Subtraia o valor do passo 1.
+3. Compare:
+
+| Painel | Ângulo esperado se for % |
+|---:|---:|
+| 5 | 2,9° |
+| 10 | 5,7° |
+| 15 | 8,5° |
+| 20 | 11,3° |
+
+Se a 10 der ~5,7°, o painel está em %. Se der outro valor, anote a correspondência real (meça também 5, 15 e 20) e use a % medida na calculadora.
 
 ## Quanto custa cada %
 

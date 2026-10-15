@@ -7,12 +7,14 @@ const AJUDA = `Uso:
   node src/cli.js tabela     --vel 5 [--modo caminhada|corrida]
   node src/cli.js ebbeling   --vel 5 --fc 128 --idade 38 --sexo m|f
   node src/cli.js prescricao --mets 10 | --vo2max 35 | --fcmax 182 --repouso 58  [--vel 5]
+  node src/cli.js cola       (mesmas opções de ebbeling ou prescricao)
 
   zonas       zonas de FC (com --repouso usa Karvonen; sem, % da FC máxima)
   esforco     custo estimado de uma combinação velocidade/inclinação
   tabela      mesma velocidade, inclinação de 0% a 20%
   ebbeling    VO2máx pelo teste de caminhada (T7) e a prescrição resultante
-  prescricao  faixas de treino por % do VO2máx e a inclinação para cada uma`;
+  prescricao  faixas de treino por % do VO2máx e a inclinação para cada uma
+  cola        tabela de bolso: inclinação por velocidade e % do VO2máx`;
 
 const OPCOES_TEXTO = new Set(["modo", "sexo"]);
 
@@ -115,23 +117,61 @@ function imprimirPrescricao(vo2max, origem, vel) {
   }
 }
 
-function ebbeling({ vel, fc, idade, sexo }) {
-  const vo2max = calc.vo2maxEbbeling({ velocidadeKmh: vel, fcFinal: fc, idade, sexo });
-  imprimirPrescricao(vo2max, "estimado (Ebbeling)", vel);
-}
-
-function prescricao({ mets, vo2max, fcmax, repouso, idade, vel = 5 }) {
-  if (vo2max) return imprimirPrescricao(vo2max, "informado", vel);
-  if (mets) return imprimirPrescricao(mets * calc.ML_POR_MET, "informado", vel);
+// Aceita o VO2máx pronto (--vo2max ou --mets), os dados do T7
+// (--vel --fc --idade --sexo) ou a FC de repouso (estimativa de Uth).
+function resolverVo2max({ mets, vo2max, fc, vel, sexo, fcmax, repouso, idade }) {
+  if (vo2max) return { vo2max, origem: "informado" };
+  if (mets) return { vo2max: mets * calc.ML_POR_MET, origem: "informado" };
+  if (fc) {
+    const v = calc.vo2maxEbbeling({ velocidadeKmh: vel, fcFinal: fc, idade, sexo });
+    return { vo2max: v, origem: "estimado pelo T7 (Ebbeling)" };
+  }
   if (repouso) {
     const fcMax = fcmax ?? calc.fcMaxEstimada(idade);
-    const estimado = calc.vo2maxUth({ fcMax, fcRepouso: repouso });
-    return imprimirPrescricao(estimado, "estimado sem teste (Uth, erro grande)", vel);
+    const v = calc.vo2maxUth({ fcMax, fcRepouso: repouso });
+    return { vo2max: v, origem: "estimado sem teste (Uth, erro grande)" };
   }
-  throw new RangeError("informe --mets, --vo2max ou --repouso (com --fcmax ou --idade)");
+  throw new RangeError("informe --mets, --vo2max, os dados do T7 ou --repouso");
 }
 
-const comandos = { zonas, esforco, tabela, ebbeling, prescricao };
+function prescricao(opcoes) {
+  const { vo2max, origem } = resolverVo2max(opcoes);
+  imprimirPrescricao(vo2max, origem, opcoes.vel ?? 5);
+}
+
+const VELOCIDADES_COLA = [4.0, 4.5, 5.0, 5.5, 6.0, 6.5];
+const PORCENTAGENS_COLA = [50, 55, 60, 65, 70, 85];
+
+// Tabela de bolso para a academia: inclinação por velocidade e % do VO2máx.
+function cola(opcoes) {
+  const { vo2max, origem } = resolverVo2max(opcoes);
+  const p = calc.prescricaoVO2(vo2max);
+  const alvo = (pct) => (pct / 100) * p.vo2maxMets;
+
+  console.log(`## Cola de inclinação`);
+  console.log(`VO2máx ${um(vo2max)} ml/kg/min = ${um(p.vo2maxMets)} METs, ${origem}\n`);
+  console.log(`| Caminhando | ${PORCENTAGENS_COLA.map((x) => `${x}%`).join(" | ")} |`);
+  console.log(`|---|${PORCENTAGENS_COLA.map(() => "---:").join("|")}|`);
+  for (const vel of VELOCIDADES_COLA) {
+    const celulas = PORCENTAGENS_COLA.map((pct) => {
+      const inc = calc.inclinacaoParaMets({ velocidadeKmh: vel, mets: alvo(pct), modo: "caminhada" });
+      if (inc < 0) return "↓";
+      if (inc > INCLINACAO_MAX) return "> 20";
+      return `${(Math.round(inc * 2) / 2).toFixed(1)}%`;
+    });
+    console.log(`| ${vel.toFixed(1)} km/h | ${celulas.join(" | ")} |`);
+  }
+  const corrida = PORCENTAGENS_COLA.map((pct) => {
+    const v = calc.velocidadeParaMets({ mets: alvo(pct), inclinacaoPct: 1 });
+    return v < CORRIDA_MIN_KMH ? "< 8" : `${um(v)} km/h`;
+  });
+  console.log(`| **Correndo a 1%** | ${corrida.join(" | ")} |`);
+  console.log(`\nContínuo: 50–70%. Tiro do intervalado: 85% ou mais.`);
+  console.log(`Inclinação arredondada para 0,5%. ↓ = o plano já passa do alvo (reduza a velocidade).`);
+  console.log(`> 20 = a esteira não alcança nessa velocidade. < 8 = alvo abaixo de um trote.`);
+}
+
+const comandos = { zonas, esforco, tabela, ebbeling: prescricao, prescricao, cola };
 
 function main(argv) {
   const { comando, opcoes } = lerArgs(argv);

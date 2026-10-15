@@ -2,7 +2,7 @@
 
 Para quem caminha bem e quer chegar a correr (ou correr melhor) usando a inclinação. Os treinos estão na [biblioteca](04-biblioteca-de-treinos.md). Os tempos são **do bloco principal**: some aquecimento e volta à calma.
 
-- **Intensidade em % do VO2máx**, como nos vídeos ([07](07-prescricao-pelo-vo2max.md)). Depois de cada T7, rode `node src/cli.js ebbeling ...` para saber a inclinação de cada porcentagem.
+- **Intensidade em % do VO2máx**, como nos vídeos ([07](07-prescricao-pelo-vo2max.md)). Depois de cada T7, gere a cola (`node src/cli.js cola ...`) e leve no celular. Ela dá a inclinação de cada porcentagem.
 - **3 sessões por semana** na fase 1 e **3 a 4** na fase 2, com pelo menos 1 dia de folga entre treinos fortes (T4, T5, T6).
 - **Semanas 4 e 8 são de descarga:** cerca de 30% menos volume, seguido do T7 para reavaliar.
 - Se o plano estiver fácil demais ou difícil demais, ajuste pela FC e pela sensação, não pelo calendário.
@@ -18,7 +18,7 @@ Para quem caminha bem e quer chegar a correr (ou correr melhor) usando a inclina
 
 ## Fase 2 · Construção (semanas 5–8): contínuo a 60–70%, primeiros intervalados
 
-Rode `prescricao` de novo com o VO2máx do reteste da semana 4.
+Gere uma cola nova com o VO2máx do reteste da semana 4. Monte o T4 como treino intervalado no GTR 4, para ele vibrar a cada troca.
 
 | Semana | Sessão A | Sessão B | Sessão C | Sessão D (opcional) |
 |---|---|---|---|---|

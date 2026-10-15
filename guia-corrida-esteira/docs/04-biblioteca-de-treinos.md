@@ -87,7 +87,7 @@ A tabela "Pirâmide contínua" do `node src/cli.js prescricao` dá a inclinaçã
 
 **Objetivo:** estimar o VO2máx, que é a base da prescrição dos vídeos, e medir a evolução, sem esforço máximo. É o teste submáximo de caminhada de Ebbeling et al. (1991), validado em adultos saudáveis de 20 a 59 anos.
 
-**Condições:** mesmo horário, descansado, sem treino forte no dia anterior e sem cafeína nas 3 horas antes. Relógio bem preso.
+**Condições:** mesmo horário, descansado, sem treino forte no dia anterior e sem cafeína nas 3 horas antes. Relógio bem preso. Se tiver uma cinta peitoral, use-a: o GTR 4 aceita, e a leitura fica mais estável.
 
 1. **Escolha a velocidade:** uma caminhada firme entre **3,2 e 7,2 km/h** que deixe a FC entre 50% e 70% da FC máxima estimada. Anote essa velocidade: os próximos testes precisam usar a mesma.
 2. **4 min a 0%** nessa velocidade (aquecimento).
@@ -96,7 +96,8 @@ A tabela "Pirâmide contínua" do `node src/cli.js prescricao` dá a inclinaçã
 5. Desça a inclinação, caminhe devagar e anote a FC 1 minuto depois (recuperação).
 6. Calcule:
    ```bash
-   node src/cli.js ebbeling --vel 5 --fc 128 --idade 38 --sexo m
+   node src/cli.js ebbeling --vel 5 --fc 128 --idade 38 --sexo m   # VO2máx e faixas
+   node src/cli.js cola     --vel 5 --fc 128 --idade 38 --sexo m   # tabela de bolso
    ```
    A saída traz o VO2máx estimado e as inclinações para T1, T3 e T4.
 
