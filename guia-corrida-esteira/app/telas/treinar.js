@@ -434,6 +434,11 @@ export function abrirSessao(ctx, { treino, planoRef = null, sessaoPlano, rascunh
       ui.toast("Relógio desconectado");
       return pintar();
     }
+    await conectarBluetooth({ todos: false });
+  }
+
+  // requestDevice exige um toque do usuário: os botões da ajuda chamam isto direto.
+  async function conectarBluetooth({ todos }) {
     try {
       conexaoBt = await sensores.fcBluetooth.conectar(
         (bpm) => {
@@ -441,6 +446,7 @@ export function abrirSessao(ctx, { treino, planoRef = null, sessaoPlano, rascunh
           pintarFc();
         },
         {
+          todos,
           aoDesconectar: () => {
             conexaoBt = null;
             ui.toast("O relógio desconectou. Digite a FC ou conecte de novo.");
@@ -450,10 +456,20 @@ export function abrirSessao(ctx, { treino, planoRef = null, sessaoPlano, rascunh
       );
       ui.toast(`FC de ${conexaoBt.nome} conectada`);
     } catch (erro) {
-      // Cancelar a escolha do aparelho não é erro.
-      if (erro?.name !== "NotFoundError") {
-        ui.abrirSheet({ titulo: "FC por Bluetooth", conteudo: h("p", { class: "sheet-mensagem" }, sensores.AJUDA_BLUETOOTH) });
-      }
+      // Cancelar o seletor costuma querer dizer que o relógio não apareceu na lista.
+      const titulo = erro?.name === "NotFoundError" ? "Não achou o relógio?" : "FC por Bluetooth";
+      const aviso = erro?.name === "SemFcError" ? `${erro.message} Ative o Heart Rate Push no relógio e tente de novo.` : null;
+      ui.abrirSheet({
+        titulo,
+        conteudo: h("div", { class: ["sheet-mensagem", "vivo-ajuda"] },
+          aviso && h("p", null, aviso),
+          h("ol", { class: "vivo-ajuda-bt" }, ...sensores.AJUDA_BLUETOOTH.map((passo) => h("li", null, passo))),
+        ),
+        acoes: [
+          { rotulo: "Mostrar todos os aparelhos", tipo: "secundario", onClick: (fechar) => { fechar(); conectarBluetooth({ todos: true }); } },
+          { rotulo: "Procurar de novo", tipo: "primario", onClick: (fechar) => { fechar(); conectarBluetooth({ todos: false }); } },
+        ],
+      });
     }
     pintar();
   }

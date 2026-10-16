@@ -536,3 +536,14 @@
   .vivo-estado--aviso { animation: none; }
   .vivo-pausar:active, .vivo-redondo:active, .vivo-fc:active, .vivo-pedido-fc:active, .vivo-icone-botao:active { transform: none; }
 }
+
+/* Passos da ajuda do Bluetooth */
+.vivo-ajuda { display: grid; gap: var(--e-3); }
+.vivo-ajuda > p { margin: 0; }
+.vivo-ajuda-bt {
+  display: grid;
+  gap: var(--e-2);
+  margin: 0;
+  padding-left: 1.25em;
+  text-align: start;
+}

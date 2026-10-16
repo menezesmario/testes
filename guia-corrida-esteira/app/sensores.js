@@ -8,8 +8,23 @@ export function lerMedidaFc(dataView) {
   return flags & 0x01 ? dataView.getUint16(1, true) : dataView.getUint8(1);
 }
 
-export const AJUDA_BLUETOOTH =
-  "No GTR 4, abra Heart Rate Push no relógio (Zepp OS 3.5) antes de conectar. Funciona só no Chrome do Android, com o app aberto fora do Claude.";
+export const AJUDA_BLUETOOTH = [
+  "No relógio, ative o Heart Rate Push (procure por \"Heart Rate Push\" ou \"Transmitir FC\" na lista de apps ou nas configurações) e deixe essa tela aberta.",
+  "No celular, deixe Bluetooth e Localização ligados e permita ao Chrome o acesso a \"Dispositivos por perto\".",
+  "Toque em \"Procurar de novo\". Se o relógio não aparecer, use \"Mostrar todos os aparelhos\" e escolha o que tiver o nome dele (ex.: Amazfit GTR 4).",
+  "Funciona só no Chrome do Android, com o app aberto fora do Claude.",
+];
+
+// O relógio pode anunciar só o nome, sem o serviço de FC no anúncio: aceita
+// também pelo prefixo do nome. Os filtros do Web Bluetooth valem como "ou".
+const FILTROS_FC = [{ services: ["heart_rate"] }, { namePrefix: "Amazfit" }, { namePrefix: "GTR" }, { namePrefix: "Zepp" }];
+
+export class SemFcError extends Error {
+  constructor(nome) {
+    super(`${nome ?? "O aparelho"} conectou, mas não está transmitindo a FC.`);
+    this.name = "SemFcError";
+  }
+}
 
 export const fcBluetooth = {
   disponivel() {
@@ -24,12 +39,24 @@ export const fcBluetooth = {
   },
 
   // onFc(bpm) a cada leitura; aoDesconectar() se o relógio cair.
-  async conectar(onFc, { aoDesconectar } = {}) {
+  // todos: mostra qualquer aparelho por perto (para quando o relógio não aparece).
+  async conectar(onFc, { aoDesconectar, todos = false } = {}) {
     if (!this.disponivel()) throw new Error("Bluetooth indisponível neste navegador");
-    const aparelho = await navigator.bluetooth.requestDevice({ filters: [{ services: ["heart_rate"] }] });
+    const aparelho = await navigator.bluetooth.requestDevice(
+      todos
+        ? { acceptAllDevices: true, optionalServices: ["heart_rate"] }
+        : { filters: FILTROS_FC, optionalServices: ["heart_rate"] },
+    );
     const servidor = await aparelho.gatt.connect();
-    const servico = await servidor.getPrimaryService("heart_rate");
-    const medida = await servico.getCharacteristic("heart_rate_measurement");
+    let medida;
+    try {
+      const servico = await servidor.getPrimaryService("heart_rate");
+      medida = await servico.getCharacteristic("heart_rate_measurement");
+    } catch {
+      // Achado pelo nome, mas sem o serviço de FC: o Heart Rate Push está desligado.
+      if (aparelho.gatt.connected) aparelho.gatt.disconnect();
+      throw new SemFcError(aparelho.name);
+    }
     const aoMudar = (e) => {
       const bpm = lerMedidaFc(e.target.value);
       if (bpm > 0) onFc(bpm);
